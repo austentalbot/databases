@@ -114,7 +114,6 @@ var app = {
       success: function(data){
         callback(data);
         console.log('fetched: success');
-        console.log(data);
       },
       error: function(xhr,status){
         console.log(xhr.statusText);

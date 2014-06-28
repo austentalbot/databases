@@ -1,7 +1,6 @@
 var url = require('url');
 var _ = require('underscore');
 var fs=require('fs');
-var mysql=require('mysql');
 
 var Sequelize = require("sequelize");
 var sequelize = new Sequelize("chat2", "root", "");
@@ -16,7 +15,6 @@ sequelize
       console.log('Connection has been established successfully.')
     }
   });
-
 
 var User = sequelize.define('User', {
   username: Sequelize.STRING
@@ -34,9 +32,6 @@ var Message = sequelize.define('Message', {
 
 User.hasMany(Message, {foreignKey: 'userid'});
 Message.belongsTo(User, {foreignKey: 'userid'});
-
-
-
 
 module.exports = {
   handleRequest: function(request, response) {
@@ -168,45 +163,6 @@ module.exports = {
       response.end(responseText);
     });
 
-
-
-
-    ///////////
-
-
-
-
-    // var roomFilter='where chat.rooms.room="lobby" ';
-    // if (queryObj.roomname!==undefined) {
-    //   roomFilter='where chat.rooms.room="'+queryObj.roomname+'" ';
-    // }
-    // headers['Content-Type'] = "application/json";
-    // var SQL='select user, room, message, messageID, time from chat.messages '+ 
-    //   'join chat.users on chat.messages.userID=chat.users.userID '+
-    //   'join chat.rooms on chat.messages.roomID=chat.rooms.roomID '+
-    //   roomFilter+
-    //   'order by time desc limit 100;';
-    // var resultsObj={'results':[]};
-    // headers['Content-Type'] = "application/json";
-
-    // connection.query(SQL, function(err, results) {
-    //   if (err) {
-    //     throw err;
-    //   }
-    //   for (var i=0; i<results.length; i++) {
-    //     var result=results[i];
-    //     var chat={};
-    //     chat.text=result.message;
-    //     chat.username=result.user;
-    //     chat.roomname=result.room;
-    //     chat.id=result.messageID;
-    //     chat.createdAt=result.time;
-    //     resultsObj.results.push(chat);
-    //   }
-    //   response.writeHead(200, headers);
-    //   var responseText=JSON.stringify(resultsObj);
-    //   response.end(responseText);
-    // });
   },
 
   defaultCorsHeaders: {

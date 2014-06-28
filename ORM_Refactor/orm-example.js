@@ -14,7 +14,7 @@ var User = sequelize.define('User', {
   username: Sequelize.STRING
 });
 
-var Message = sequelize.define('Message' {
+var Message = sequelize.define('Message', {
   userid: Sequelize.INTEGER,
   text: Sequelize.STRING,
   roomname: Sequelize.STRING
@@ -40,3 +40,51 @@ User.sync().success(function() {
     });
   });
 });
+
+// User.hasMany(Message);
+// Message.belongsTo(User);
+
+// User.create({}).complete(function(err, user) {
+//   Message.create({}).complete(function(err, message) {
+//     user.getMessage().complete(function(err, _target) {
+//       console.log(_target.values);
+//     });
+//   });
+// });
+
+/* .sync() makes Sequelize create the database table for us if it doesn't
+ *  exist already: */
+ /*
+var userName="Austen Talbot";
+
+// //make sure user is added
+User.sync().success(function() {
+  var newUser=User.build({username: userName});
+  newUser.save().success(function() {
+    //find user name
+    User.find({where: {username: userName}}).success(function(user) {
+      user['dataValues']['id'];
+
+      //add message
+      Message.sync().success(function() {
+        var newMessage = Message.build({text: "this is my message", 
+          userid: user['dataValues']['id'],
+          roomname: "lobby"
+        });
+
+        newMessage.save().success(function() {
+          console.log('saved');
+        });
+      });
+    });    
+  });
+});
+*/
+
+// Message.findAll({limit: 100, order: 'createdAt desc'}).success(function(results) {
+//   for (var i=0; i<results.length; i++) {
+//     console.log(results[i]['dataValues']);
+//   }
+// });
+
+

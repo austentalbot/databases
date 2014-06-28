@@ -1,18 +1,19 @@
+#DROP DATABASE chat;
 CREATE DATABASE chat;
 
 USE chat;
 
 CREATE TABLE messages (
   /* Describe your table here.*/
-  (message VARCHAR(300), userID int(11), roomID int(11), time TIMESTAMP(14), messageID int(11) NOT NULL auto_increment, PRIMARY KEY (messageID))
+  message VARCHAR(200), userID int(11), roomID int(11), time TIMESTAMP(6), messageID int(11) NOT NULL auto_increment, PRIMARY KEY (messageID)
 );
 
 CREATE TABLE users (
-  (user VARCHAR(50), userID int(11) NOT NULL auto_increment, PRIMARY KEY(userID))
+  user VARCHAR(50), userID int(11) NOT NULL auto_increment, PRIMARY KEY(userID)
 );
 
 CREATE TABLE rooms (
-  (room VARCHAR(50), roomID int(11) NOT NULL auto_increment, PRIMARY KEY(roomID))
+  room VARCHAR(50), roomID int(11) NOT NULL auto_increment, PRIMARY KEY(roomID)
 );
 
 

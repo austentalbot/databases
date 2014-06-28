@@ -15,24 +15,20 @@
 
     <div id="main">
       <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-      <form name='input' id='createRoom'>
-      Create Room: <input id='roomInput' type='text'>
-      <input type='submit' value='Submit'>
-      </form>
 
-    <select id='roomSelector' >
-      <option value='lobby'>Lobby</option>
-    </select>
+      <form name='input' id='selectUser'>
+      User Name: <input id='userName' type='text'>
+      </form>      
+      <form name='input' id='selectRoom'>
+      Select Room: <input id='roomInput' type='text'>
+      </form>   
 
       <form name='input' id='send'>
-      Chat message: <input class='submit' type='text' name='chatMessage'>
+      Chat Message: <input class='submit' type='text' name='chatMessage'>
       <input type='submit' value='Submit'>
       </form>
       <div id='chats'></div>
       <div id='roomSelect'></div>
-
-
 
     </div>
     <script src="scripts/app.js"></script>

@@ -69,10 +69,17 @@ var app = {
   handleSubmit: function(evt){
     evt.preventDefault();
     // console.log('insdie chat input');
+    // var message = {
+    //   text: $('#send .submit').val(),
+    //   username: app.username,
+    //   roomname: app.currentRoom
+    // };
+    app.username=$('#userName').val();
+    app.currentroom=$('#roomInput').val();
     var message = {
       text: $('#send .submit').val(),
       username: app.username,
-      roomname: app.currentRoom
+      roomname: app.currentroom
     };
     app.send(message);
     $('#send .submit').val('');

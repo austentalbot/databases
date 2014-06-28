@@ -8,7 +8,8 @@ var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'chat'
+  database: 'chat',
+  multipleStatements: true
 });
 
 connection.connect();
@@ -55,16 +56,63 @@ module.exports = {
           storage[post.id] = post;
           //load into SQL
           // connection.connect()
-          var SQL='insert into messages (message, userID, roomID, time) values("'+post.text+'", 1, 1, NOW());'
+          //var SQL='insert into messages (message, userID, roomID, time) values("'+post.text+'", "1, 1, NOW());'
+
+
+          //test to see if userID and roomID exist
+          var SQL='select (select userID from users where user="'+post.username+'") as user, '+
+            '(select roomID from rooms where room="'+post.roomname+'") as room;'
           connection.query(SQL, function(err, results) {
             if (err) {
               throw err;
             }
-            // connection.end();
+            //check user
+            var SQL='';
+            if (results[0]['user']===null) {
+              SQL+='insert into users (user) value("'+post.username+'"); ';
+            }
+            //check room
+            if (results[0]['room']===null) {
+              SQL+='insert into rooms (room) value("'+post.roomname+'")';
+            }
+
+            //insert
+            console.log(SQL);
+            if (SQL!=='') {
+              connection.query(SQL, function(err, results) {
+                if (err) {
+                  throw err;
+                }
+                var SQL='insert into messages (message, userID, roomID, time) '+
+                'select "'+post.text+'", (select userID from users where user="'+post.username+'") as user, '+
+                '(select roomID from rooms where room="'+post.roomname+'") as room, now();'
+                
+                connection.query(SQL, function(err, results) {
+                  if (err) {
+                    throw err;
+                  }
+                  // connection.end();
+                });
+                //end SQL load
+                response.writeHead(statusCode, headers);
+                response.end(responseText);
+              });
+            } else {
+              var SQL='insert into messages (message, userID, roomID, time) '+
+                'select "'+post.text+'", (select userID from users where user="'+post.username+'") as user, '+
+                '(select roomID from rooms where room="'+post.roomname+'") as room, now();'
+                
+              connection.query(SQL, function(err, results) {
+                if (err) {
+                  throw err;
+                }
+                // connection.end();
+              });
+              //end SQL load
+              response.writeHead(statusCode, headers);
+              response.end(responseText);
+            }
           });
-          //end SQL load
-          response.writeHead(statusCode, headers);
-          response.end(responseText);
         });
       }
 
